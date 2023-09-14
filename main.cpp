@@ -7,10 +7,10 @@ std::string format_duration(int seconds) {
   std::string result_string = "";
   std::string next_phrase = "";
 
-  std::vector<int> durations = {31536000, 86400, 3600, 1};
+  std::vector<int> durations = {31536000, 86400, 3600, 60, 1};
   int duration;
   int how_many_durations;
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 5; i++) {
     duration = durations[i];
     if (seconds > duration) {
       how_many_durations = seconds / duration;
@@ -21,42 +21,36 @@ std::string format_duration(int seconds) {
         next_phrase += " year";
       } else if (i == 1) {
         next_phrase += " day";
-      } else {
+      } else if (i == 2) {
         next_phrase += " hour";
+      } else if (i == 3) {
+        next_phrase += " minute";
+      } else {
+        next_phrase += " second";
       }
       if (how_many_durations > 1) {
         next_phrase += 's';
       }
       result_array.push_back(next_phrase);
       next_phrase = "";
-    } else {
-      next_phrase = std::to_string(seconds) + " second";
-      if (seconds > 1) {
-        next_phrase += 's';
-      }
-      result_array.push_back(next_phrase);
     }
-  }
-  // seconds
-  if (seconds != 0) {
-    next_phrase = std::to_string(seconds) + " second";
-    if (seconds > 1) {
-      next_phrase += 's';
-    }
-    result_array.push_back(next_phrase);
   }
   
-  for (int i = 0; i < result_array.size(); i++) {
-    
+  int result_array_size = result_array.size();
+  for (int i = 0; i < result_array_size; i++) {
+    result_string += result_array[i];
+    if (i + 2 == result_array_size) {
+      result_string += " and ";
+    }
+    if (i + 2 < result_array_size) {
+      result_string += ", ";
+    }
   }
 
-  std::cout << seconds << " left" << std::endl;
-  for (int i = 0; i < result_array.size(); i++) {
-    std::cout << result_array[i] << ' ';
-  }
+  std::cout << result_string;
 }
 
 int main() {
-  format_duration(500000401);
+  format_duration(62);
   return 0;
 }
