@@ -3,6 +3,7 @@
 #include <vector>
 
 std::string format_duration(int seconds) {
+  if (seconds == 0) return "now";
   std::vector<std::string> result_array = {};
   std::string result_string = "";
   std::string next_phrase = "";
@@ -12,7 +13,7 @@ std::string format_duration(int seconds) {
   int how_many_durations;
   for (int i = 0; i < 5; i++) {
     duration = durations[i];
-    if (seconds > duration) {
+    if (seconds >= duration) {
       how_many_durations = seconds / duration;
       seconds -= how_many_durations * duration;
 
@@ -47,10 +48,10 @@ std::string format_duration(int seconds) {
     }
   }
 
-  std::cout << result_string;
+  return result_string;
 }
 
 int main() {
-  format_duration(62);
+  std::cout << format_duration(70423949);
   return 0;
 }
